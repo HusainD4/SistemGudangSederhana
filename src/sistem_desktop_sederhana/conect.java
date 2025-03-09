@@ -14,8 +14,8 @@ public class conect {
             m.setServerName("localhost"); 
             m.setDatabaseName("Gudang_Petani"); 
             m.setUser("root"); 
-            m.setPassword(""); // Atau password yang sesuai
-            m.setPortNumber(3307); // Periksa apakah MySQL mendengarkan pada port ini
+            m.setPassword(""); 
+            m.setPortNumber(3307); 
             m.setServerTimezone("Asia/Jakarta"); 
 
             Connection C = m.getConnection();

@@ -18,14 +18,14 @@ import java.sql.SQLException;
  */
 public class desktop extends javax.swing.JFrame {
     static DefaultTableModel prd;
-    // Database connection variables
+
     private Connection conn;
     private Statement stmt;
     private ResultSet rs;
     
     public desktop() {
-        initComponents();  // Inisialisasi komponen GUI yang dihasilkan oleh NetBeans
-        setExtendedState(JFrame.MAXIMIZED_BOTH);  // Menyetel jendela agar maksimal (full screen)
+        initComponents(); 
+        setExtendedState(JFrame.MAXIMIZED_BOTH);  
         settingTableProduk();
         viewdataproduk("");
         updateLabelDataProduk();
@@ -81,7 +81,7 @@ public class desktop extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("GUDANG PETANI");
+        jLabel1.setText("WAREHOUSE");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -429,18 +429,18 @@ public class desktop extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Simpan_DataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Simpan_DataActionPerformed
-     // Ambil input dari JTextField
+
     String namaProduk = textNP.getText();
     String stokProdukStr = textSP.getText();
     String hargaSatuanStr = textHS.getText();
 
-    // Validasi input
+
     if (namaProduk.isEmpty() || stokProdukStr.isEmpty() || hargaSatuanStr.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Semua field harus diisi!");
         return;
     }
 
-    // Validasi stok dan harga
+
     int stokProduk;
     double hargaSatuan;
     try {
@@ -459,39 +459,37 @@ public class desktop extends javax.swing.JFrame {
         return;
     }
 
-    // Menyimpan data ke database
-    Connection conn = conect.Go(); // Memanggil koneksi
+  
+    Connection conn = conect.Go(); 
     if (conn == null) {
         JOptionPane.showMessageDialog(this, "Koneksi database gagal. Tidak dapat menyimpan data.");
         return;
     }
 
-    // Menggunakan try-with-resources untuk memastikan koneksi ditutup setelah selesai
     try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO produk (Nama_Produk, Stok_Produk, Harga_Satuan) VALUES (?, ?, ?)")) {
         stmt.setString(1, namaProduk);
         stmt.setInt(2, stokProduk);
         stmt.setDouble(3, hargaSatuan);
 
-        // Menjalankan query
+
         int rowsAffected = stmt.executeUpdate();
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Data produk berhasil disimpan!");
 
-            // Menambahkan data ke dalam JTable
+
             DefaultTableModel model = (DefaultTableModel) TB_Produk.getModel();
             double totalHarga = hargaSatuan * stokProduk;
             model.addRow(new Object[]{
-                model.getRowCount() + 1,   // Nomor urut
-                namaProduk,               // Nama Produk
-                stokProduk,               // Stok Produk
-                hargaSatuan,              // Harga Satuan
-                totalHarga                // Total Harga (Harga Satuan * Stok Produk)
+                model.getRowCount() + 1,   
+                namaProduk,              
+                stokProduk,          
+                hargaSatuan,          
             });
 
-            // Update label data produk jika diperlukan
-            updateLabelDataProduk();  // Pastikan metode ini sudah ada
+    
+            updateLabelDataProduk();  
 
-            // Kosongkan input fields setelah data disimpan
+       
             textNP.setText("");
             textSP.setText("");
             textHS.setText("");
@@ -499,21 +497,21 @@ public class desktop extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal menyimpan data produk.");
         }
     } catch (SQLException e) {
-        // Menangani SQL Exception secara lebih rinci
+      
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan SQL: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     } catch (Exception e) {
-        // Menangani exception umum lainnya
+    
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     } finally {
         try {
-            // Pastikan koneksi ditutup
+       
             if (conn != null && !conn.isClosed()) {
                 conn.close();
             }
         } catch (SQLException e) {
-            // Jika koneksi gagal ditutup, tangani dengan log atau pesan
+          
             e.printStackTrace();
         }
     }
@@ -575,25 +573,23 @@ public class desktop extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-   int n = TB_Produk.getSelectedRow();  // Mendapatkan baris yang dipilih dari JTable
-    if (n != -1) {  // Memeriksa apakah ada baris yang dipilih
+   int n = TB_Produk.getSelectedRow(); 
+    if (n != -1) {
         try {
-            // Mengambil data produk dari JTable sesuai dengan kolom yang dipilih
-            int kode_produk = Integer.parseInt(TB_Produk.getValueAt(n, 1).toString());  // Kolom 0 adalah Code_Produk (pastikan kolom yang benar)
-            String nama_produk = TB_Produk.getValueAt(n, 2).toString();  // Kolom 1 adalah Nama_Produk
-            int stok = Integer.parseInt(TB_Produk.getValueAt(n, 3).toString());  // Kolom 2 adalah Stok_Produk
-            double harga_satuan = Double.parseDouble(TB_Produk.getValueAt(n, 4).toString());  // Kolom 3 adalah Harga_Satuan
+           
+            int kode_produk = Integer.parseInt(TB_Produk.getValueAt(n, 1).toString());  
+            String nama_produk = TB_Produk.getValueAt(n, 2).toString();
+            int stok = Integer.parseInt(TB_Produk.getValueAt(n, 3).toString()); 
+            double harga_satuan = Double.parseDouble(TB_Produk.getValueAt(n, 4).toString());  
 
-            // Membuka dialog untuk mengedit produk
             ProdukEdit EP = new ProdukEdit(this, true);
 
-            // Pass kode_produk directly as an int
-            EP.setKodeProduk(kode_produk);  // Set kode produk as int (not String)
-            EP.setNamaProduk(nama_produk);  // Set nama produk
-            EP.setHargaSatuan(harga_satuan);  // Set harga satuan
-            EP.setStok(stok);  // Set stok produk
-            EP.setVisible(true);  // Menampilkan JDialog EditProduk
-
+           
+            EP.setKodeProduk(kode_produk);  
+            EP.setNamaProduk(nama_produk);
+            EP.setHargaSatuan(harga_satuan);  
+            EP.setStok(stok); 
+            EP.setVisible(true); 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error saat memproses data: " + e.getMessage());
         }
@@ -676,65 +672,60 @@ public class desktop extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 public static void viewdataproduk(String where) {
     try {
-        // Menghapus semua baris yang ada di JTable sebelum menampilkan data baru
+       
         for (int i = prd.getRowCount() - 1; i >= 0; i--) {
             prd.removeRow(i);
         }
 
-        // Membuka koneksi ke database
         Connection K = conect.Go();
         Statement S = K.createStatement();
 
-        // Query untuk mengambil data produk sesuai dengan parameter where
         String Q = "SELECT `Code_Produk`, `Nama_Produk`, `Stok_Produk`, `Harga_Satuan` FROM `produk` " + where;
         ResultSet R = S.executeQuery(Q);
         
-        int no = 1; // Nomor urut untuk menampilkan produk
+        int no = 1; 
         while (R.next()) {
-            // Mengambil data produk dari hasil query
+           
             int ID_produk = R.getInt("Code_Produk");
             String nama_produk = R.getString("Nama_Produk");
-            int stok = R.getInt("Stok_Produk");  // Stok sebagai integer
-            double harga_satuan = R.getDouble("Harga_Satuan"); // Harga Satuan sebagai double
+            int stok = R.getInt("Stok_Produk"); 
+            double harga_satuan = R.getDouble("Harga_Satuan"); 
 
-            // Menambahkan baris baru ke dalam DefaultTableModel
-            double totalHarga = harga_satuan * stok; // Menghitung total harga produk
-            Object[] P = {no, ID_produk, nama_produk, stok, harga_satuan, totalHarga}; // Tambahkan total harga
+            double totalHarga = harga_satuan * stok;
+            Object[] P = {no, ID_produk, nama_produk, stok, harga_satuan, totalHarga}; 
             prd.addRow(P);
 
-            no++; // Menambah nomor urut
+            no++; 
         }
     } catch (SQLException e) {
-        e.printStackTrace(); // Menampilkan error jika terjadi masalah
+        e.printStackTrace(); 
     }
 }
 
 private void settingTableProduk() {
-    // Mendapatkan model tabel dari JTable
+   
     prd = (DefaultTableModel) TB_Produk.getModel();
 
-    // Pastikan tabel memiliki 5 kolom
-    TB_Produk.getColumnModel().getColumn(0).setMinWidth(50);  // Kolom No
+
+    TB_Produk.getColumnModel().getColumn(0).setMinWidth(50);  
     TB_Produk.getColumnModel().getColumn(0).setMaxWidth(70);
 
-    TB_Produk.getColumnModel().getColumn(1).setMinWidth(0);   // Kolom ID Produk (Code_Produk) disembunyikan
+    TB_Produk.getColumnModel().getColumn(1).setMinWidth(0);   
     TB_Produk.getColumnModel().getColumn(1).setMaxWidth(0);
 
-    TB_Produk.getColumnModel().getColumn(2).setMinWidth(200); // Kolom Nama Produk
+    TB_Produk.getColumnModel().getColumn(2).setMinWidth(200); 
     TB_Produk.getColumnModel().getColumn(2).setMaxWidth(400);
 
-    TB_Produk.getColumnModel().getColumn(3).setMinWidth(150); // Kolom Stok Produk
+    TB_Produk.getColumnModel().getColumn(3).setMinWidth(150); 
     TB_Produk.getColumnModel().getColumn(3).setMaxWidth(350);
 
-    TB_Produk.getColumnModel().getColumn(4).setMinWidth(450); // Kolom Harga Satuan
+    TB_Produk.getColumnModel().getColumn(4).setMinWidth(450); 
     TB_Produk.getColumnModel().getColumn(4).setMaxWidth(650);
 }
 private void updateLabelDataProduk() {
-    // Mendapatkan DefaultTableModel dari JTable
     DefaultTableModel model = (DefaultTableModel) TB_Produk.getModel();
     int rowCount = model.getRowCount();
 
-    // Menampilkan hanya jumlah produk
     label_data_produk.setText(String.valueOf(rowCount));
 }
 }

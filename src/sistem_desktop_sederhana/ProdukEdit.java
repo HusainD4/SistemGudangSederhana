@@ -13,11 +13,11 @@ import static sistem_desktop_sederhana.desktop.viewdataproduk;
  * @author HUSAIN
  */
 public class ProdukEdit extends javax.swing.JDialog {
-    // Variabel instance untuk produk
-    private int Code_Produk;   // Code_Produk
-    private String Nama_Produk;   // Nama_Produk
-    private double Harga_Satuan;  // Harga_Satuan
-    private int Stok_Produk;      // Stok_Produk
+ 
+    private int Code_Produk;  
+    private String Nama_Produk; 
+    private double Harga_Satuan;  
+    private int Stok_Produk;      
 
     /**
      * Creates new form ProdukEdit
@@ -177,58 +177,53 @@ public class ProdukEdit extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Simpan_DataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Simpan_DataActionPerformed
-    // Get the input data from the text fields
+
     String Nama_Produk = textNP.getText();
     int Stok_Produk = Integer.parseInt(textSP.getText());
     double Harga_Satuan = Double.parseDouble(textHS.getText());
 
-    // Assuming getKodeProduk() returns the current product code (Code_Produk) that should be used in the WHERE clause
-    int kode_produk = getKodeProduk();  // Get the product code from somewhere (e.g., selected row or passed value)
 
-    // SQL query to update the product information (excluding Code_Produk)
+    int kode_produk = getKodeProduk(); 
+
     String Q = "UPDATE produk "
              + "SET Nama_Produk=?, "
              + "Stok_Produk=?, "
              + "Harga_Satuan=? "
-             + "WHERE Code_Produk=?";  // Only using Code_Produk in WHERE clause
+             + "WHERE Code_Produk=?";  
 
     try {
-        Connection K = conect.Go();  // Connect to the database
+        Connection K = conect.Go(); 
         PreparedStatement P = K.prepareStatement(Q);
 
-        // Set the parameters for the query
-        P.setString(1, Nama_Produk);    // Set Nama_Produk
-        P.setInt(2, Stok_Produk);       // Set Stok_Produk
-        P.setDouble(3, Harga_Satuan);   // Set Harga_Satuan
-        P.setInt(4, kode_produk);       // Set the Code_Produk for the WHERE clause
+        P.setString(1, Nama_Produk);  
+        P.setInt(2, Stok_Produk);       
+        P.setDouble(3, Harga_Satuan);  
+        P.setInt(4, kode_produk);     
 
-        // Execute the update query
+
         int affectedRows = P.executeUpdate();
         
         if (affectedRows > 0) {
-            // If the query updated rows, refresh the data and show success message
-            viewdataproduk("");  // Refresh the table or data view
+        
+            viewdataproduk("");  
             JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
-            textNP.requestFocus();  // Focus on Nama_Produk input field
-            dispose();  // Close the dialog or frame
+            textNP.requestFocus(); 
+            dispose();  
         } else {
-            // If no rows were updated, show an error message
             JOptionPane.showMessageDialog(this, "Data gagal disimpan.");
         }
     } catch (SQLException e) {
-        // Handle SQL exceptions (e.g., database issues)
         JOptionPane.showMessageDialog(this, "Error saat menyimpan data: " + e.getMessage());
     } catch (Exception e) {
-        // Handle other general exceptions
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
     }
     }//GEN-LAST:event_Simpan_DataActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-    textNP.setText(getNamaProduk()); // Menampilkan nama produk
-    textHS.setText(String.valueOf(getHargaSatuan())); // Menampilkan harga satuan
-    textSP.setText(String.valueOf(getStok())); // Menampilkan stok produk
+    textNP.setText(getNamaProduk()); 
+    textHS.setText(String.valueOf(getHargaSatuan())); 
+    textSP.setText(String.valueOf(getStok())); 
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -292,7 +287,6 @@ public class ProdukEdit extends javax.swing.JDialog {
     private javax.swing.JTextField textSP;
     // End of variables declaration//GEN-END:variables
 
-  // Getter dan Setter untuk Code_Produk
     public int getKodeProduk() {
         return Code_Produk;
     }
@@ -301,7 +295,6 @@ public class ProdukEdit extends javax.swing.JDialog {
         this.Code_Produk = kodeProduk;
     }
 
-    // Getter dan Setter untuk Nama_Produk
     public String getNamaProduk() {
         return Nama_Produk;
     }
@@ -310,7 +303,6 @@ public class ProdukEdit extends javax.swing.JDialog {
         this.Nama_Produk = namaProduk;
     }
 
-    // Getter dan Setter untuk Harga_Satuan
     public double getHargaSatuan() {
         return Harga_Satuan;
     }
@@ -319,7 +311,6 @@ public class ProdukEdit extends javax.swing.JDialog {
         this.Harga_Satuan = hargaSatuan;
     }
 
-    // Getter dan Setter untuk Stok_Produk
     public int getStok() {
         return Stok_Produk;
     }
