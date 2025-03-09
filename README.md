@@ -15,7 +15,7 @@ Sistem ini dirancang untuk mempermudah manajemen data gudang dengan fitur penyim
 ---
 
 ## 🚀 *Download Database*
-📥 *[Klik di sini untuk mengunduh database](https://drive.google.com/drive/folders/1kvyWsKfCHISdkOg9GJkwJ15zNl3DeCwj?usp=sharing)*
+📥 *[Klik di sini untuk mengunduh database](https://drive.google.com/drive/folders/1cad8GCuimS0KLp_jxiQWkjydSGJ9V0q-?usp=drive_link)*
 
 ---
 
