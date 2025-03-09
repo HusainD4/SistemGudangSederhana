@@ -22,13 +22,13 @@ Sistem ini dirancang untuk mempermudah manajemen data gudang dengan fitur penyim
 ## 🎨 *Tampilan Aplikasi*
 
 ### 🔐 *Gudang*
-> Halaman login untuk masuk ke sistem aplikasi.
+> tampilan aplikasi sederhana (gudang)
 <div style="border: 2px solid #3498db; padding: 10px; display: inline-block; border-radius: 8px; margin-top: 10px;">
 <img src="https://github.com/user-attachments/assets/fbdd79f2-0726-4fd8-b872-8324cbb61dea" alt="awal" width="400">
 </div>
 
 ### 🔐 *Edit Produk*
-> Halaman login untuk masuk ke sistem aplikasi.
+> tampilan ketika mengedit produk
 <div style="border: 2px solid #3498db; padding: 10px; display: inline-block; border-radius: 8px; margin-top: 10px;">
 <img src="https://github.com/user-attachments/assets/c6547dfb-2787-4b61-8abc-86e17dc3dd9c" alt="awal" width="400">
 </div>
